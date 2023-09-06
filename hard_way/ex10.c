@@ -2,8 +2,10 @@ int main() {
     int i = 3;
     switch (i) {
         case 1:
+        case 5:
             return 1;
         case 2:
+        case 6:
             return 2;
         case 3:
             return 3;

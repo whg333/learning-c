@@ -1,8 +1,8 @@
 int main() {
     int i = 3;
-    if(i == 1){
+    if(i == 1 || i == 5){
         return 1;
-    }else if(i == 2){
+    }else if(i == 2 || i == 6){
         return 2;
     }else if(i == 3){
         return 3;
