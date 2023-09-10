@@ -27,9 +27,14 @@ void Person_print(S_Person* person){
 }
 
 int main() {
-    S_Person whg;
-    whg.name = "whg";
-    whg.age = 37;
+    struct Person zxc = {};
+    // zxc.name = "zxy";
+    // zxc.age = 36;
+    Person_print(&zxc);
+
+    S_Person whg = {"whg", 37};
+    // whg.name = "whg";
+    // whg.age = 37;
     Person_print(&whg);
 
     S_Person* joe = Person_create("Joe", 32);
