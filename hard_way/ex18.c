@@ -69,6 +69,13 @@ void test_sorting(int *numbers, int count, compare_cb cmp){
     puts("");
 
     free(sorted);
+
+    unsigned char * data = (unsigned char *)cmp;
+    for(int i=0;i<25;i++){
+        printf("%02X:", data[i]);
+        // printf("%c:", data[i]);
+    }
+    puts("");
 }
 
 int main(int argc, char *argv[]) {
