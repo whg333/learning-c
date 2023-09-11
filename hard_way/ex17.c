@@ -101,27 +101,30 @@ void Database_create(Connection *conn){
 }
 
 void Database_set(Connection *conn, int id, const char *name, const char *email){
-    Address *addr = &conn->db->rows[id];
-    if(addr->set){
+    // 这里如果不使用&取地址，则代表的是局部栈上，并没有真正的设置成功
+    Address addr = conn->db->rows[id];
+    if(addr.set){
         die("Already set, delete it first");
     }
 
-    addr->set = 1;
-    char* res = strncpy(addr->name, name, MAX_DATA);
+    addr.set = 1;
+    char* res = strncpy(addr.name, name, MAX_DATA);
     if(!res){
         die("Name copy failed");
     }
 
-    res = strncpy(addr->email, email, MAX_DATA);
+    res = strncpy(addr.email, email, MAX_DATA);
     if(!res){
         die("Email copy failed");
     }
+
+    conn->db->rows[id] = addr; // 使用栈的方式需要最后这里再重新设置一遍
 }
 
 void Database_get(Connection *conn, int id){
-    Address *addr = &conn->db->rows[id];
-    if(addr->set){
-        Address_print(addr);
+    Address addr = conn->db->rows[id];
+    if(addr.set){
+        Address_print(&addr);
     }else{
         die("ID is not set");
     }
@@ -134,9 +137,9 @@ void Database_delete(Connection *conn, int id){
 
 void Database_list(Connection *conn){
     for(int i=0;i<MAX_ROWS;i++){
-        Address *addr = &conn->db->rows[i];
-        if(addr->set){
-            Address_print(addr);
+        Address addr = conn->db->rows[i];
+        if(addr.set){
+            Address_print(&addr);
         }
     }
 }
