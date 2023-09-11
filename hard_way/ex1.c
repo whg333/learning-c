@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    printf("Hello, World!\n");
+    printf("Hello, World! I am %d year old.%d\n", 24, 17);
     return 0;
 }
 
