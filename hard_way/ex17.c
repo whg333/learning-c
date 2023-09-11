@@ -141,6 +141,13 @@ void Database_set(Connection *conn, int id, const char *name, const char *email)
     }
 
     addr.set = 1;
+
+    /**
+     * char *strncpy(char *dest, const char *src, size_t n);
+     * strncpy 函数用于复制一个字符串的前n个字符到另一个字符串中。它是C语言标准库中的字符串处理函数之一，用于处理字符串的复制操作。
+     * 需要注意的是，strncpy 并不保证 dest 字符串一定以 '\0' 结束。因此，在使用 strncpy 后，
+     * 你通常需要手动添加 '\0'，以确保目标字符串是一个有效的C字符串。
+     */
     char* res = strncpy(addr.name, name, MAX_DATA);
     if(!res){
         die("Name copy failed");
