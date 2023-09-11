@@ -11,10 +11,18 @@ typedef struct {
 } Team;
 
 int main() {
+    int size_size_t = sizeof(size_t);
+    printf("sizeof(size_t)=%d\n", size_size_t);
     int size_char_pointer = sizeof(char*);
     printf("sizeof(char*)=%d\n", size_char_pointer);
     int size_int = sizeof(int);
     printf("sizeof(int)=%d\n", size_int);
+    int size_long = sizeof(long);
+    printf("sizeof(long)=%d\n", size_long);
+    int size_long_int = sizeof(long int);
+    printf("sizeof(long int)=%d\n", size_long_int);
+    int size_long_long = sizeof(long long);
+    printf("sizeof(long long)=%d\n", size_long_long);
     int size_person = sizeof(S_Person);
     printf("sizeof(S_Person)=%d\n", size_person);
     int size_team = sizeof(Team);
