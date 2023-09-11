@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define MAX_DATA 512
-#define MAX_ROWS 100
+#define MAX_ROWS 4
 
 typedef struct {            // 4+4+512+512 = 1032 byte
     int id;                 // 4 byte = 32 bit
@@ -143,7 +143,7 @@ void Database_list(Connection *conn){
 
 int main(int argc, char *argv[]) {
     if(argc < 3){
-        die("USAGE: ex17 <dbfile><action> [action params]");
+        die("USAGE: ./ex17 <dbfile><action> [action params]");
     }
 
     char *filename = argv[1];
@@ -163,6 +163,7 @@ int main(int argc, char *argv[]) {
         case 'c':
             Database_create(conn);
             Database_write(conn);
+            printf("create database %s success!\n", filename);
             break;
         case 'g':
             if(argc != 4){
@@ -176,6 +177,7 @@ int main(int argc, char *argv[]) {
             }
             Database_set(conn, id, argv[4], argv[5]);
             Database_write(conn);
+            printf("set id=%d success!\n", id);
             break;
         case 'd':
             if(argc != 4){
@@ -183,6 +185,7 @@ int main(int argc, char *argv[]) {
             }
             Database_delete(conn, id);
             Database_write(conn);
+            printf("delete id=%d success!\n", id);
             break;
         case 'l':
             Database_list(conn);
