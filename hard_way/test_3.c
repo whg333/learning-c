@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 typedef struct Person{
-    char* name;
-    int age;
+    char* name; // 8 byte
+    int age;    // 4 byte
 } S_Person;
 
 typedef struct {
@@ -11,7 +11,15 @@ typedef struct {
 } Team;
 
 int main() {
-    Team *team = malloc(sizeof(Team));
+    int size_char_pointer = sizeof(char*);
+    printf("sizeof(char*)=%d\n", size_char_pointer);
+    int size_int = sizeof(int);
+    printf("sizeof(int)=%d\n", size_int);
+    int size_person = sizeof(S_Person);
+    printf("sizeof(S_Person)=%d\n", size_person);
+    int size_team = sizeof(Team);
+    printf("sizeof(Team)=%d\n", size_team);
+    Team *team = malloc(size_team);
     S_Person whg = {"whg", 23};
     team->persons[0] = whg;
 
