@@ -36,6 +36,11 @@ void Address_print(Address *addr){
 }
 
 void Database_read(Connection *conn){
+    /**
+     * size_t fread(void *ptr, size_t size, size_t count, FILE *stream);
+     * fread 用于从文件中读取数据，并将数据存储到内存中。它接受四个参数：要存储数据的内存位置（ptr）、每个元素的大小（size）、
+     * 要读取的元素数量（count）以及文件指针（stream）。函数返回成功读取的元素数量。通常用于读取二进制数据。
+     */
     int rc = fread(conn->db, sizeof(Database), 1, conn->file);
     if(rc != 1){
         die("Failed to load databases.");
@@ -53,6 +58,13 @@ Connection* Database_open(const char *filename, char mode){
         die("db Memory error");
     }
 
+    /**
+     * FILE *fopen(const char *filename, const char *mode);
+     * fopen 用于打开一个文件，并返回一个指向文件的指针（FILE *）。
+     * 它接受两个参数：文件名（filename）和打开模式（mode）。打开模式可以是 "r"（只读）、
+     * "w"（写入，如果文件存在则截断，如果不存在则创建）、"a"（追加，如果文件不存在则创建）、
+     * "rb"（二进制读取）等等。函数成功打开文件时返回一个指向文件的指针，失败时返回 NULL。
+     */
     if(mode == 'c'){
         conn->file = fopen(filename, "w");
     }else{
@@ -71,6 +83,11 @@ Connection* Database_open(const char *filename, char mode){
 void Database_close(Connection *conn){
     if(conn){
         if(conn->file){
+            /**
+             * int fclose(FILE *stream);
+             * fclose 用于关闭文件。它接受一个文件指针（stream），并将文件关闭。
+             * 在完成文件操作后，通常应该调用 fclose 来确保文件被正确关闭，释放资源并刷新缓冲区。
+             */
             fclose(conn->file);
         }
         if(conn->db){
@@ -81,12 +98,28 @@ void Database_close(Connection *conn){
 }
 
 void Database_write(Connection *conn){
+    /**
+     * void rewind(FILE *stream);
+     * rewind 用于将文件指针（stream）重新定位到文件的开头。这使得你可以重新读取文件的内容
+     */
     rewind(conn->file);
+
+    /**
+     * size_t fwrite(const void *ptr, size_t size, size_t count, FILE *stream);
+     * fwrite 用于将数据从内存写入到文件中。
+     * 它接受四个参数：要写入的数据的内存位置（ptr）、每个元素的大小（size）、要写入的元素数量（count）
+     * 以及文件指针（stream）。函数返回成功写入的元素数量。通常用于写入二进制数据。
+     */
     int rc = fwrite(conn->db, sizeof(Database), 1, conn->file);
     if(rc != 1){
         die("Failed to write database.");
     }
 
+    /**
+     * int fflush(FILE *stream);
+     * fflush 用于将输出缓冲区的内容刷新到文件中。通常，C标准库会自动进行缓冲以提高性能，
+     * 但在某些情况下，你可能需要强制刷新缓冲区以确保数据被写入文件。
+     */
     rc = fflush(conn->file);
     if(rc == -1){
         die("Cannot flush database.");
