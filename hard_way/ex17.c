@@ -97,7 +97,7 @@ void Database_write(Connection *conn){
 void Database_create(Connection *conn){
     for(int i=0;i<MAX_ROWS;i++){
         Address addr = {i, 0};
-        conn->db->rows[i] = addr; // 直接局部栈上分配，而不是malloc的堆上分配
+        conn->db->rows[i] = addr; // 直接局部的栈上分配，而不是malloc的堆上分配
     }
 }
 
@@ -108,7 +108,7 @@ void Database_set(Connection *conn, int id, const char *name, const char *email)
     }
 
     addr->set = 1;
-    char *res = strncpy(addr->name, name, MAX_DATA);
+    char* res = strncpy(addr->name, name, MAX_DATA);
     if(!res){
         die("Name copy failed");
     }
