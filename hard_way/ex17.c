@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <assert.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
@@ -7,15 +6,15 @@
 #define MAX_DATA 512
 #define MAX_ROWS 100
 
-typedef struct {
-    int id;
-    int set;
-    char name[MAX_DATA];
-    char email[MAX_DATA];
+typedef struct {            // 4+4+512+512 = 1032 byte
+    int id;                 // 4 byte = 32 bit
+    int set;                // 4 byte = 32 bit
+    char name[MAX_DATA];    // 1 byte * 512 = 512 byte = 4096 bit
+    char email[MAX_DATA];   // 1 byte * 512 = 512 byte = 4096 bit
 } Address;
 
 typedef struct {
-    Address rows[MAX_ROWS];
+    Address rows[MAX_ROWS]; //1032byte * 100 = 103200 byte
 } Database;
 
 typedef struct {
@@ -36,7 +35,7 @@ void Address_print(Address *addr){
     printf("%d %s %s\n", addr->id, addr->name, addr->email);
 }
 
-void Database_load(Connection *conn){
+void Database_read(Connection *conn){
     int rc = fread(conn->db, sizeof(Database), 1, conn->file);
     if(rc != 1){
         die("Failed to load databases.");
@@ -59,7 +58,7 @@ Connection* Database_open(const char *filename, char mode){
     }else{
         conn->file = fopen(filename, "r+");
         if(conn->file){
-            Database_load(conn);
+            Database_read(conn);
         }
     }
 
@@ -191,6 +190,7 @@ int main(int argc, char *argv[]) {
         default:
             die("Invalid action: c=create, g=get, s=set, d=del, l=list");
     }
+
     Database_close(conn);
 
     return 0;
