@@ -17,6 +17,11 @@ int Monster_init(void *self){
 int Monster_attack(void *self, int damage){
     Monster *monster = self;
     printf("You attack %s[hp=%d]!\n", monster->_(desc), monster->hit_points);
+
+    // 当把Room_attack写错成Monster_attack，这里实际上就是地址Room结构体下的Monster的字段地址，因为都是第2个字段
+    Monster *m = monster->hit_points;
+    printf("You attack %s[hp=%d]!\n", m->_(desc), m->hit_points);
+
     monster->hit_points -= damage;
     printf("You damage it with %d!\n", damage);
     if(monster->hit_points > 0){
@@ -77,7 +82,7 @@ int Room_attack(void *self, int damage){
 
 Object RoomProto = {
         .move = Room_move,
-        .attack = Room_attack,
+        .attack = Monster_attack,
 };
 
 void *Map_move(void *self, Direction direction){
