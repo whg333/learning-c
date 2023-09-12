@@ -16,10 +16,11 @@ int Monster_init(void *self){
 }
 int Monster_attack(void *self, int damage){
     Monster *monster = self;
-    printf("You attack %s!\n", monster->_(desc));
+    printf("You attack %s[hp=%d]!\n", monster->_(desc), monster->hit_points);
     monster->hit_points -= damage;
+    printf("You damage it with %d!\n", damage);
     if(monster->hit_points > 0){
-        printf("It is still alive.\n");
+        printf("It is still alive[hp=%d].\n", monster->hit_points);
         return 0;
     }else{
         printf("It is dead!\n");
@@ -76,7 +77,7 @@ int Room_attack(void *self, int damage){
 
 Object RoomProto = {
         .move = Room_move,
-        .attack = Monster_attack,
+        .attack = Room_attack,
 };
 
 void *Map_move(void *self, Direction direction){
@@ -132,8 +133,8 @@ int process_input(Map *game){
     int damage = rand() % 4;
 
     switch(ch){
-        case -1:
-            printf("Giving up? You suck.\n");
+        case 'q':
+            printf("Quit? Giving up? You suck.\n");
             return 0;
 
         case 'n':
@@ -162,7 +163,7 @@ int process_input(Map *game){
             break;
 
         default:
-            printf("What?: %c\n", ch);
+            printf("What? You input:%c\n", ch);
     }
 
     return 1;
