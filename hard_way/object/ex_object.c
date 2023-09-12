@@ -12,6 +12,7 @@
 int Monster_init(void *self){
     Monster *monster = self;
     monster->hit_points = 10;
+    printf("Monster init.\n");
     return 1;
 }
 int Monster_attack(void *self, int damage){
@@ -19,8 +20,8 @@ int Monster_attack(void *self, int damage){
     printf("You attack %s[hp=%d]!\n", monster->_(desc), monster->hit_points);
 
     // 当把Room_attack写错成Monster_attack，这里实际上就是地址Room结构体下的Monster的字段地址，因为都是第2个字段
-    Monster *m = monster->hit_points;
-    printf("You attack %s[hp=%d]!\n", m->_(desc), m->hit_points);
+    // Monster *m = monster->hit_points;
+    // printf("You attack %s[hp=%d]!\n", m->_(desc), m->hit_points);
 
     monster->hit_points -= damage;
     printf("You damage it with %d!\n", damage);
@@ -38,7 +39,7 @@ Object MonsterProto = {
 };
 
 int Room_init(void *self){
-    printf("Room init!");
+    printf("Room init.\n");
     return 1;
 }
 void *Room_move(void *self, Direction direction){
@@ -81,8 +82,9 @@ int Room_attack(void *self, int damage){
 }
 
 Object RoomProto = {
+        .init = Room_init,
         .move = Room_move,
-        .attack = Monster_attack,
+        .attack = Room_attack,
 };
 
 void *Map_move(void *self, Direction direction){
@@ -120,6 +122,7 @@ int Map_init(void *self){
     map->start = hall;
     map->location = hall;
 
+    printf("Map init.\n");
     return 1;
 }
 
@@ -178,7 +181,7 @@ int main(){
     srand(time(NULL));
 
     Map *game = NEW(Map, "The Hall of the Minotaur.");
-    printf("Game begin: You enter the ");
+    printf("Game Begin: You enter the ");
     game->location->_(describe)(game->location);
     while(process_input(game)){
 

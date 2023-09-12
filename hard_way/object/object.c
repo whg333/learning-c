@@ -9,6 +9,7 @@
 #include <assert.h>
 
 int Object_init(void *self){
+    printf("Object init.\n");
     return 1;
 }
 
@@ -45,7 +46,7 @@ void *Object_new(int size, Object proto, char *desc){
     if(!proto.attack) proto.attack = Object_attack;
 
     Object *obj = calloc(1, size); // calloc返回void *任意类型的指针
-    *obj = proto;
+    *obj = proto; // 指针骚操作，直接指向提前创建好的名为XxxProto的Object，每个对象结构体的第一个字段名为proto且为Object类型
 
     obj->desc = strdup(desc);
 
