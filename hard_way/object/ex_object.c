@@ -12,7 +12,7 @@
 int Monster_init(void *self){
     Monster *monster = self;
     monster->hit_points = 10;
-    printf("Monster init.\n");
+    printf("Monster(%s)[hp=%d] init.\n", monster->proto.desc, monster->hit_points);
     return 1;
 }
 int Monster_attack(void *self, int damage){
@@ -39,7 +39,8 @@ Object MonsterProto = {
 };
 
 int Room_init(void *self){
-    printf("Room init.\n");
+    Room *room = self;
+    printf("Room(%s) init.\n", room->proto.desc);
     return 1;
 }
 void *Room_move(void *self, Direction direction){
@@ -109,20 +110,21 @@ int Map_init(void *self){
     Room *arena = NEW(Room, "The arena, with the minotaur");
     Room *kitchen = NEW(Room, "Kitchen, you have the knife now");
 
-    arena->bad_guy = NEW(Monster, "The evil minotaur");
     hall->north = throne;
 
-    throne->west = arena;
     throne->east = kitchen;
     throne->south = hall;
+    throne->west = arena;
 
+    arena->bad_guy = NEW(Monster, "The evil minotaur");
     arena->east = throne;
+
     kitchen->west = throne;
 
     map->start = hall;
     map->location = hall;
 
-    printf("Map init.\n");
+    printf("Map(%s) init.\n", map->proto.desc);
     return 1;
 }
 
@@ -181,7 +183,7 @@ int process_input(Map *game){
 int main(){
     srand(time(NULL));
 
-    Map *game = NEW(Map, "The Hall of the Minotaur.");
+    Map *game = NEW(Map, "The Hall of the Minotaur");
     printf("Game Begin: You enter the ");
     game->location->_(describe)(game->location);
     while(process_input(game)){
