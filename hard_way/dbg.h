@@ -1,6 +1,7 @@
 //
 // Created by whg on 2023/9/13.
 //
+// #define NDEBUG
 
 #ifndef WHG_C_DBG_H
 #define WHG_C_DBG_H

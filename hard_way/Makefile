@@ -1,4 +1,4 @@
-CFLAGS=-Wall -g -std=c99
+CFLAGS=-Wall -g -std=c99 -DNDEBUG
 
 # 使用通配符来获取所有以.c为后缀的源文件
 SRCS = $(wildcard *.c)
