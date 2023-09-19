@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
     you.eyes = eyes-1;
     check(you.eyes >= 0 && you.eyes <= OTHER_EYES, "Do it right, that's not an option.");
 
-    printf("How much do you make an hour?");
+    printf("How much do you make an hour? ");
     rc = fscanf(stdin, "%f", &you.income);
     check(rc > 0, "Enter a floating point number.");
 
