@@ -17,7 +17,7 @@ int normal_copy(char *from, char *to, int count){
 
 int duffs_device(char *from, char *to, int count){
     {
-        int n = (count + 7) / 8;
+        int n = (count + 7) / 8; // +7没有意义可以删掉不影响结果
         switch (count % 8) {
             case 0:
                 do{
