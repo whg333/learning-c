@@ -39,14 +39,14 @@ error:
     return -1;
 }
 
-int read_scan(const char *fmt, ...) {
+int read_scan(const char *fmt, ...) { // ...代表可变参数，java里也是，只能放在最后
     int rc = 0;
     long *out_int = NULL;
     char *out_char = NULL;
     char **out_string = NULL;
     int max_buffer = 0;
 
-    va_list argp;
+    va_list argp; // 操作va_list数据
     va_start(argp, fmt);
 
     for(int i=0;fmt[i] != '\0';i++){
@@ -66,8 +66,8 @@ int read_scan(const char *fmt, ...) {
                     *out_char = fgetc(stdin);
                     break;
                 case 's':
-                    max_buffer = va_arg(argp, int);
-                    out_string = va_arg(argp, char **);
+                    max_buffer = va_arg(argp, int); // 从栈上取走第1个个参数
+                    out_string = va_arg(argp, char **); // 从栈上取走第2个个参数
                     rc = read_string(out_string, max_buffer);
                     check(rc == 0, "Failed to read string.");
                     break;
@@ -75,7 +75,7 @@ int read_scan(const char *fmt, ...) {
                     sentinel("Invalid format.");
             }
         }else{
-            fgetc(stdin);
+            fgetc(stdin); // 读取一个字符char但什么也不做，即跳过它
         }
 
         check(!feof(stdin) && !ferror(stdin), "Input error.")
