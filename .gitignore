@@ -4,6 +4,8 @@
 # 忽略可执行文件
 ex*
 *.o
+# 忽略名为libex开头的库
+libex*.so
 # 忽略测试文件和临时文件
 test*
 temp*
