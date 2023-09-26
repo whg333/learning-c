@@ -6,6 +6,7 @@ ex*
 *.o
 *.a
 *.so
+*.log
 # 忽略测试文件和临时文件
 test*.c
 temp*
