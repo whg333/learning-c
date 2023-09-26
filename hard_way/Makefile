@@ -17,4 +17,4 @@ ex22_main: ex22.o
 
 # 清理目标：删除所有生成的可执行文件
 clean:
-	rm -f $(BINS) *.o
+	rm -f $(BINS) *.o *.a *.so
