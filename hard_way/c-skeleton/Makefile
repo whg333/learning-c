@@ -1,3 +1,4 @@
+CC = gcc
 CFLAGS=-g -O2 -Wall -Wextra -Isrc -rdynamic -DNDEBUG $(OPTFLAGS)
 LIBS=-ldl $(OPTLIBS)
 PREFIX?=/usr/local
@@ -22,6 +23,7 @@ $(TARGET): build $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
 	ranlib $@
 $(SO_TARGET): $(TARGET) $(OBJECTS)
+	$(info SOURCES=$(SOURCES))
 	$(CC) -shared -o $@ $(OBJECTS)
 
 build:
