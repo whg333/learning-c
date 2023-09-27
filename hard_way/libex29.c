@@ -3,8 +3,11 @@
 //
 
 /**
+ * 先把.c编译成.o文件，注意使用-fPIC
  * gcc -std=c99 -fPIC -c libex29.c -o libex29.o
+ * 再把.o文件变成.so动态库，使用-shared
  * gcc -shared -o libex29.so libex29.o
+ * 使用-ldl可加载动态库
  * gcc -Wall -g -std=c99 ex29.c -ldl -o ex29
  */
 
