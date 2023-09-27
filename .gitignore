@@ -9,6 +9,7 @@ ex*
 *.log
 # 忽略测试文件和临时文件
 test*.c
+*tests
 temp*
 # 但是允许提交源文件
 !*.c
